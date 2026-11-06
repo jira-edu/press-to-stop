@@ -82,8 +82,8 @@ void displayInit() {
   }
 }
 
-void waiting_debounce() {
-  for (int i = 0; i < 5; i++) {
+void waiting_debounce(int t) {
+  for (int i = 0; i < t; i++) {
     delay(1);
     refreshDisplay();
   }
@@ -94,8 +94,10 @@ uint32_t lastCount = 0;
 
 void setup() {
   displayInit();
-  displayNumber(0);
+  displayNumber(888);
   pinMode(SW_PIN, INPUT_PULLUP);
+  waiting_debounce(500);
+  displayNumber(0);
 }
 
 void loop() {
@@ -105,7 +107,7 @@ void loop() {
     while (digitalRead(SW_PIN) == LOW) {
       refreshDisplay();
     }
-    waiting_debounce();
+    waiting_debounce(10);
 
     while (digitalRead(SW_PIN) == HIGH) {
       if (millis() - lastCount >= 130) {
@@ -120,13 +122,13 @@ void loop() {
       refreshDisplay();
     }
 
-    waiting_debounce();
+    waiting_debounce(10);
 
     while (digitalRead(SW_PIN) == LOW) {
       refreshDisplay();
     }
 
-    waiting_debounce();
+    waiting_debounce(10);
 
     while (digitalRead(SW_PIN) == HIGH) {
       refreshDisplay();
@@ -138,6 +140,6 @@ void loop() {
       refreshDisplay();
     }
 
-    waiting_debounce();
+    waiting_debounce(10);
   }
 }
